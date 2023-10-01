@@ -15,10 +15,6 @@
       command: "./bin/kubectl get svc {{ ENVIRONMENT_NAME }}-service"
       register: elb_dns
 
-    - name: Debug Message
-      debug:
-        msg: "LoadBalancer's DNS name: {{ elb_dns.stdout }}"
-
     - name: Copy to Local File
       copy:
         content: "{{ elb_dns.stdout }}"
