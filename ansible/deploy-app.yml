@@ -5,10 +5,12 @@
   become: yes
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
-    CIRCLE_WORKFLOW_ID: "{{ lookup('env', 'CIRCLE_WORKFLOW_ID') }}"
+    CIRCLE_WORKFLOW_ID_FULL: "{{ lookup('env', 'CIRCLE_WORKFLOW_ID') }}"
+    DOCKER_TAG: "{{ CIRCLE_WORKFLOW_ID_FULL | regex_replace('(.{7}).*', '\\1') }}"
+    DOCKER_PATH: "{{ lookup('env', 'DOCKER_PATH') }}"
   tasks:
     - name: Update the deployment to run the latest Build
-      shell: "./bin/kubectl set image deployments/{{ ENVIRONMENT_NAME }}-deployment {{ ENVIRONMENT_NAME }}-app=maidieu/{{ ENVIRONMENT_NAME }}:{{ CIRCLE_WORKFLOW_ID }}"
+      shell: "./bin/kubectl set image deployments/{{ ENVIRONMENT_NAME }}-deployment {{ ENVIRONMENT_NAME }}-app={{ DOCKER_PATH }}:{{ DOCKER_TAG }}"
       args:
         chdir: $HOME
 
