@@ -214,7 +214,7 @@ jobs:
           command: |
             apk add --update ansible
       - run:
-          name: Deploy newest Docker Image
+          name: Deploy latest Docker Image
           command: |
             cat ~/inventory.txt
             cd ansible

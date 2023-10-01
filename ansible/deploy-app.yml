@@ -10,11 +10,11 @@
     DOCKER_PATH: "{{ lookup('env', 'DOCKER_PATH') }}"
   tasks:
     - name: Update the deployment to run the latest Build
-      shell: "./bin/kubectl set image deployments/{{ ENVIRONMENT_NAME }}-deployment {{ ENVIRONMENT_NAME }}-app={{ DOCKER_PATH }}:{{ DOCKER_TAG }}"
+      shell: "kubectl set image deployments/{{ ENVIRONMENT_NAME }}-deployment {{ ENVIRONMENT_NAME }}-app={{ DOCKER_PATH }}:{{ DOCKER_TAG }}"
       args:
         chdir: $HOME
 
     - name: Check if deployment is successful
-      shell: "./bin/kubectl rollout status deployments/{{ ENVIRONMENT_NAME }}-deployment"
+      shell: "kubectl rollout status deployments/{{ ENVIRONMENT_NAME }}-deployment"
       args:
         chdir: $HOME
