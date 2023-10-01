@@ -217,6 +217,10 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
+          name: AWS update kubeconfig
+          command: |
+            aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $ENVIRONMENT_NAME-cluster
+      - run:
           name: Deploy latest Docker Image
           command: |
             kubectl set image deployments/$ENVIRONMENT_NAME-deployment $ENVIRONMENT_NAME-app=$DOCKER_PATH:${CIRCLE_WORKFLOW_ID:0:7}
