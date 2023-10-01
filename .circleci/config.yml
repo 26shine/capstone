@@ -206,7 +206,11 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: yum install -y tar gzip
+          command: |
+            yum install -y tar gzip
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            mv kubectl /usr/local/bin/
       - add_ssh_keys:
           fingerprints:
             - "63:7b:6f:1a:40:10:c1:7a:d7:75:ba:69:94:d7:6f:d6"
