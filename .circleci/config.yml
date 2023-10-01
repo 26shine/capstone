@@ -216,10 +216,12 @@ jobs:
       - run:
           name: Deploy latest Docker Image
           command: |
-            cat ~/inventory.txt
-            cd ansible
-            ansible-playbook -i ~/inventory.txt deploy-app.yml
+            kubectl set image deployments/$ENVIRONMENT_NAME-deployment $ENVIRONMENT_NAME-app=$DOCKER_PATH:${CIRCLE_WORKFLOW_ID:0:7}
           no_output_timeout: 2m
+      - run:
+          name: Check if deployment is successful
+          command: |
+            kubectl rollout status deployments/$ENVIRONMENT_NAME-deployment
 
 workflows:
   default:
