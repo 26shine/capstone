@@ -6,6 +6,8 @@
   become: yes
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
+    ansible_env:
+      HOME: "/path/to/home"
   tasks:
     - name: Debug Message
       debug:
@@ -16,8 +18,6 @@
       with_items:
         - "./bin/kubectl get svc {{ ENVIRONMENT_NAME }}-service"
       register: elb_dns
-      args:
-        chdir: "{{ ansible_env.HOME }}"
 
     - name: Debug Message
       debug:
