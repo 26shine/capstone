@@ -5,18 +5,14 @@
   gather_facts: false
   become: yes
   vars:
-    ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
-    ansible_env:
-      HOME: "/path/to/home"
+    ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"  # Make sure this variable is correctly set.
   tasks:
     - name: Debug Message
       debug:
         msg: "Getting the LoadBalancer's DNS name..."
 
     - name: Get LoadBalancer DNS Name
-      command: "{{ item }}"
-      with_items:
-        - "./bin/kubectl get svc {{ ENVIRONMENT_NAME }}-service"
+      command: "./bin/kubectl get svc {{ ENVIRONMENT_NAME }}-service"
       register: elb_dns
 
     - name: Debug Message
