@@ -201,7 +201,7 @@ jobs:
 
   deploy-docker:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli
     steps:
       - checkout
       - add_ssh_keys:
@@ -209,10 +209,6 @@ jobs:
             - "63:7b:6f:1a:40:10:c1:7a:d7:75:ba:69:94:d7:6f:d6"
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible
       - run:
           name: Deploy latest Docker Image
           command: |
